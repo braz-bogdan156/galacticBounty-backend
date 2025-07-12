@@ -9,7 +9,7 @@ router.get('/', getAllBounties); // public routes
 
 router.post('/', protect, createBounty); // only logged in can create
 
-router.put('/:id/accept', protect, acceptBounty); // accept the bounty
+router.patch('/:id/accept', protect, acceptBounty); // accept the bounty
 router.get('/mine/all', protect, getMyBounties);  // my bounties
 
 module.exports = router;
