@@ -20,7 +20,14 @@ exports.getAllBounties = async (filters = {}) => {
 
   return await Bounty.find(query)
     .populate('postedBy', 'username planet avatar')
-    .populate('acceptedBy', 'username');
+    .populate('acceptedBy', 'username')
+    .lean()
+    .then(bounties =>
+      bounties.map(b => ({
+        ...b,
+        status: b.acceptedBy ? 'accepted' : 'open',
+      }))
+    );
 };
 
 exports.acceptBounty = async (bountyId, user) => {
