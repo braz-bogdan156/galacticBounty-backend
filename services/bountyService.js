@@ -43,6 +43,24 @@ exports.acceptBounty = async (bountyId, user) => {
 
   return bounty;
 };
+exports.unacceptBounty = async (bountyId, user) => {
+  const bounty = await Bounty.findById(bountyId);
+  if (!bounty) throw new Error('Bounty not found');
+
+  if (!bounty.acceptedBy || bounty.acceptedBy.toString() !== user._id.toString()) {
+    throw new Error('You cannot unaccept this bounty');
+  }
+
+  bounty.acceptedBy = null;
+  await bounty.save();
+
+  user.acceptedBounties = user.acceptedBounties.filter(
+    id => id.toString() !== bountyId
+  );
+  await user.save();
+
+  return bounty;
+};
 
 exports.getMyBounties = async (userId) => {
   const accepted = await Bounty.find({ acceptedBy: userId });

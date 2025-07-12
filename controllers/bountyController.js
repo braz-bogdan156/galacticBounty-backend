@@ -27,6 +27,15 @@ const acceptBounty = async (req, res) => {
   }
 };
 
+const unacceptBounty = async (req, res) => {
+  try {
+    const bounty = await bountyService.unacceptBounty(req.params.id, req.user);
+    res.json({ message: 'Bounty unaccepted successfully', bounty });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
 const getMyBounties = async (req, res) => {
   try {
     const result = await bountyService.getMyBounties(req.user._id);
@@ -41,4 +50,5 @@ module.exports = {
   getAllBounties,
   acceptBounty,
   getMyBounties,
+  unacceptBounty,
 };
