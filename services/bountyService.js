@@ -66,4 +66,4 @@ exports.getMyBounties = async (userId) => {
   const accepted = await Bounty.find({ acceptedBy: userId });
   const posted = await Bounty.find({ postedBy: userId });
   return { accepted, posted };
-};
+  };
