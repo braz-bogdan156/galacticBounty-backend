@@ -18,6 +18,7 @@ cd backend
 Install dependencies:
 
 npm install
+
 Configure environment variables in .env:
 
 PORT=5000
